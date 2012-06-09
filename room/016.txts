@@ -1,0 +1,9 @@
+#   Room Game page 16
+# =====================
+
+|=Dark Room=|
+
+You are lying on the floor of a dark room.
+
+@012.txts:Get up
+@016.txts:Stay on the floor

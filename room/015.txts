@@ -1,0 +1,9 @@
+#   Room Game page 15
+# =====================
+
+|=Room=|
+
+You are lying on the floor of the room.
+
+@017.txts:Get up
+@015.txts:Stay on the floor

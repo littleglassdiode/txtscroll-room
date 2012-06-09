@@ -1,0 +1,9 @@
+#   Room Game menu
+# ==================
+
+|=Room Game=|
+
+@001.txts:Start Game
+@help.txts:Help
+@hint.txts:Hints
+@$quit$:Quit

@@ -1,0 +1,11 @@
+#   Room Game page 9
+# ====================
+
+|=Room=|
+
+She shouts back:
+"Well, there's a light switch and two shouting tubes, and it seems to glow
+without any obvious source of light."
+
+@010.txts:Shout "Two tubes?  My room only has one!"
+@004.txts:Ignore the voice and go back to your switch-flipping down-lying game
