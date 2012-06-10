@@ -71,7 +71,7 @@ case $1 in
     cd "$src"
     for f in $files; do
         if [ -f "$f" -a ! `eval echo \\$$cf` -nt "$f" ]; then
-            g=`echo "$f" | sed 's/\.md//'`
+            g=`echo "$f" | sed 's/\.md$//'`
             cd "$cwd"
             # Okay, yeah, this is a dirty hack, but it gets the job done without
             # having to write the same command twice.
