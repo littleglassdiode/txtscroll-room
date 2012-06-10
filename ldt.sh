@@ -21,35 +21,36 @@ function fatal {
 echo -e "\033[1mL\033[0met's \033[1md\033[0mo" \
     "\033[1mt\033[0mhis\033[1;30m.\033[37msh\033[0mit!"
 
-if ( ! test -d "$src" )
-then
+if [ ! -d "$src" ]; then
     error "Source directory not found!"
     fatal
 fi
 
-if ( ! test -d "$dest" )
-then
+if [ ! -d "$dest" ]; then
     note "Destination directory not found; creating it now."
     mkdir "$dest"
 fi
 
 cwd=$PWD
 
-cf="$cwd/.ldtsh_last"
-if ( ! test -f ".ldtsh_last" )
-then
-    cf="$f"
+mod="$cwd/.ldtsh_last"
+cf="mod"
+if [ ! -f ".ldtsh_last" ]; then
+    cf="f"
 fi
 
 cd "$src"
-for f in $files
-do
-    if ( test -f "$f" && test "$cf" -ot "$f" )
-    then
+for f in $files; do
+    if [ -f "$f" -a ! `eval echo \\$$cf` -nt "$f" ]; then
         g=`echo "$f" | sed 's/\.md//'`
         cd "$cwd"
-        echo "markdown_py \"$src/$g.md\" -f \"$dest/$g.html\""
-        markdown_py "$src/$g.md" -f "$dest/$g.html"
+        # Okay, yeah, this is a dirty hack, but it gets the job done without
+        # having to write the same command twice.
+        bash -xc "markdown_py \"$src/$g.md\" -f \"$dest/$g.html\""
+        if [ $? -ne 0 ]; then
+            error "Build error!"
+            fatal
+        fi
         cd "$src"
     fi
 done
