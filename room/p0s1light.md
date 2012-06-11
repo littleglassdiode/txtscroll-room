@@ -6,11 +6,10 @@ Except of course for that one in which you were killed repeatedly by a mutant
 ape.
 
 You are standing in the middle of a well-lit room.  There is a light switch on
-one wall, which as you just discovered, seems to control an ambient glow with
-no obvious source.  There is a copper pipe with a funneled end sticking down
-from the ceiling.  On the other side of the room is another pipe, similar in
-shape, but made of steel.  There is no obvious way into or out of the room.
-You think to yourself:
+one wall, which seems to control an ambient glow with no obvious source.  There
+is a copper pipe with a funneled end sticking down from the ceiling.  On the
+other side of the room is another pipe, similar in shape, but made of steel.
+There is no obvious way into or out of the room.  You think to yourself:
 
 `"Hey, she said that people get put in here when they find out about the rooms.
 I didn't know anything about them.  Why am I here?  ..."`
