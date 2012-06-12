@@ -9,4 +9,4 @@ transfixed to articulate a sentence like that.
 
 The flashing gets slightly slower.  You fall asleep.
 
-* [Wake up](p0s1light.html)
+* [Wake up](p0s1wakeup.html)
