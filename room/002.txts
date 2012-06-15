@@ -1,9 +1,0 @@
-#   Room Game page 2
-# ====================
-
-|=Dark Room=|
-
-After searching for a few minutes, you find a light switch.
-
-@004.txts:Flip the switch
-@001.txts:Don't flip the switch
