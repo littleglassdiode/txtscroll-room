@@ -1,52 +1,59 @@
-#!/bin/bash
+#!/bin/sh
 # ldt.sh
 
 src="room"
 dest="htmlroom"
 files="*.md"
+md="markdown_py"
 
-function info {
-    echo -e "\033[1;32m$1\033[0m"
+ldt=${1:-build}
+
+info() {
+    printf "\033[1;32m$1\033[0m\n"
 }
 
-function note {
-    echo -e "\033[36m$1\033[0m"
+note() {
+    printf "\033[36m$1\033[0m\n"
 }
 
-function error {
-    echo -e "\033[1;31m$1\033[0m"
-}
-
-function fatal {
-    error "Fatal error; aborting"
+fatal() {
+    printf "\033[1;31m$1\033[0m\n"
+    printf "\033[1;31mFatal error; aborting\033[0m\n"
     exit 1
 }
 
-case $1 in
+pexec() {
+    printf "\t$*\n"
+    $*
+}
+
+ldtlast=".ldtsh_last"
+
+case $ldt in
   help)
-    echo -e "\033[1mL\033[0met's \033[1md\033[0mo" \
-        "\033[1mt\033[0mhis\033[1;30m.\033[37msh\033[0mit!"
-    echo "usage: ldt.sh [subcommand]"
-    echo "where subcommand is one of:"
-    echo "  build (default): compile the project"
-    echo "  clean: remove anything ldt.sh created"
-    echo "  help: show this message"
+    printf "\033[1mL\033[0met's \033[1md\033[0mo "
+    printf "\033[1mt\033[0mhis\033[1;30m.\033[37ms\033[0mtuff "
+    printf "\033[1mh\033[0mere!\n"
+    printf "usage: ldt.sh [subcommand]\n"
+    printf "where subcommand is one of:\n"
+    printf "  build (default): compile the project\n"
+    printf "  clean: remove anything ldt.sh created\n"
+    printf "  help: show this message\n"
     ;;
   clean)
-    info "Let's clean this shit!"
+    info "Let's clean this stuff here!"
     if [ -d "$dest" ]; then
-        bash -xc "rm -r \"$dest\""
+        pexec rm -r "$dest"
     fi
-    if [ -f ".ldtsh_last" ]; then
-        bash -xc "rm .ldtsh_last"
+    if [ -f "$ldtlast" ]; then
+        pexec rm "$ldtlast"
     fi
     ;;
-  build | *)
-    info "Let's build this shit!"
+  build)
+    info "Let's build this stuff here!"
 
     if [ ! -d "$src" ]; then
-        error "Source directory not found!"
-        fatal
+        fatal "Source directory not found!"
     fi
 
     if [ ! -d "$dest" ]; then
@@ -56,35 +63,35 @@ case $1 in
 
     cwd=$PWD
 
-    last="$cwd/.ldtsh_last"
+    last="$cwd/$ldtlast"
     cf="last"
-    if [ ! -f ".ldtsh_last" ]; then
+    if [ ! -f "$ldtlast" ]; then
         cf="f"
     fi
 
     f="$src"
-    if [ "$src" -ot `eval echo \\$$cf` ]; then
+    if [ "$src" -ot $(eval echo '$'$cf) ]; then
         note "No change since last build."
         exit 0
     fi
 
     cd "$src"
     for f in $files; do
-        if [ -f "$f" -a ! `eval echo \\$$cf` -nt "$f" ]; then
-            g=`echo "$f" | sed 's/\.md$//'`
+        # if it's a regular file that has been changed since last build
+        if [ -f "$f" -a ! $(eval echo '$'$cf) -nt "$f" ]; then
+            filename="${f%.*}"
             cd "$cwd"
             # Okay, yeah, this is a dirty hack, but it gets the job done without
             # having to write the same command twice.
-            bash -xc "markdown_py \"$src/$g.md\" -f \"$dest/$g.html\""
+            pexec $md "$src/$filename.md" -f "$dest/$filename.html"
             if [ $? -ne 0 ]; then
-                error "Build error!"
-                fatal
+                fatal "Build error!"
             fi
             cd "$src"
         fi
     done
 
     cd "$cwd"
-    touch .ldtsh_last
+    touch $ldtlast
     ;;
 esac
